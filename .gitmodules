@@ -1,0 +1,3 @@
+[submodule "Sources/Ash-Haxe"]
+	path = Sources/Ash-Haxe
+	url = https://github.com/nadako/Ash-Haxe.git
