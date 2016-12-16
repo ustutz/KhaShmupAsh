@@ -1,14 +1,14 @@
 package shmup.nodes;
 import ash.core.Node;
-import shmup.components.Display;
 import shmup.components.Position;
+import shmup.components.types.Spaceship;
 
 /**
  * ...
  * @author Urs Stutz
  */
-class RenderNode extends Node<RenderNode> {
+class SpaceshipNode extends Node<SpaceshipNode> {
 
-	public var display:Display;
+	public var spaceship:Spaceship;
 	public var position:Position;
 }

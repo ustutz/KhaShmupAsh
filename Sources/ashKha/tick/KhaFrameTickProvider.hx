@@ -41,7 +41,8 @@ class KhaFrameTickProvider implements ITickProvider {
 		
 		previousTime = Scheduler.time();
 		playing = true;
-		timeTaskId = Scheduler.addTimeTask( dispatchTick, 0, 1 / 60 );
+		//timeTaskId = Scheduler.addTimeTask( dispatchTick, 0, 1 / 60 );
+		timeTaskId = Scheduler.addTimeTask( dispatchTick, 0, 1 / 5 );
 
 	}
     

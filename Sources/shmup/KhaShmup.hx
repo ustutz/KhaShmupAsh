@@ -2,6 +2,8 @@ package shmup;
 
 import ash.core.Engine;
 import ashKha.tick.KhaFrameTickProvider;
+import kha.Assets;
+import kha.Color;
 import kha.Framebuffer;
 import kha.Image;
 import kha.Scheduler;
@@ -22,6 +24,8 @@ class KhaShmup {
 	var config:GameConfig;
 	var tickProvider:KhaFrameTickProvider;
 	
+	var initialized = false;
+
 	public function new( screenWidth:Int, screenHeight:Int ) {
 		
 		this.screenHeight = screenHeight;
@@ -32,22 +36,26 @@ class KhaShmup {
 		
 		engine = new Engine();
 		creator = new EntityCreator( engine );
-		config = new GameConfig( screenWidth, screenHeight );
+		config = new GameConfig( screenWidth, screenHeight, Color.fromValue( 0x26004d ));
 		
 		// create a buffer to draw to
 		var backbuffer = Image.createRenderTarget( screenWidth, screenHeight );
-		var renderSystem = new RenderSystem( backbuffer );
+		var renderSystem = new RenderSystem( config, backbuffer );
 		
 		engine.addSystem( new GameManager( creator, config ), SystemPriorities.preUpdate );
 		engine.addSystem( renderSystem, SystemPriorities.render );
 		
+		creator.createGamestate();
+		
 		System.notifyOnRender( renderSystem.setFramebuffer );
+
 	}
 	
-	public function start():Void {
+	public function start():Void { //trace( "start" );
 		
 		tickProvider = new KhaFrameTickProvider();
 		tickProvider.add( engine.update );
 		tickProvider.start();
 	}
+
 }
