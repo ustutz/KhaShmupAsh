@@ -2,7 +2,7 @@ package shmup;
 import ash.core.Engine;
 import ash.core.Entity;
 import kha.Assets;
-import kha.math.FastVector3;
+import kha.math.FastVector2;
 import shmup.components.Display;
 import shmup.components.GameState;
 import shmup.components.Position;
@@ -37,7 +37,7 @@ class EntityCreator {
 		
 		var spaceshipEntity = new Entity();
 		spaceshipEntity.add( new Display( Assets.images.playerShip ));
-		spaceshipEntity.add( new Position( new FastVector3( 300, 500 ), 0 ));
+		spaceshipEntity.add( new Position( new FastVector2( 300, 500 ), 0 ));
 		spaceshipEntity.add( new Spaceship() );
 		
 		engine.addEntity( spaceshipEntity );
