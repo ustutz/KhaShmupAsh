@@ -9,7 +9,7 @@ import kha.Image;
 import kha.Scheduler;
 import kha.System;
 import kha.input.Keyboard;
-import shmup.Controls;
+import shmup.KeyListener;
 import shmup.EntityCreator;
 import shmup.GameConfig;
 import shmup.components.KeyStates;
@@ -29,7 +29,7 @@ class KhaShmup {
 	var tickProvider:KhaFrameTickProvider;
 	
 	var initialized = false;
-	var controls:Controls;
+	var controls:KeyListener;
 
 	public function new( screenWidth:Int, screenHeight:Int ) {
 		
@@ -43,7 +43,7 @@ class KhaShmup {
 		config = new GameConfig( screenWidth, screenHeight, Color.fromValue( 0x26004d ));
 		
 		var keyStates = new KeyStates();
-		controls = new Controls( keyStates );
+		controls = new KeyListener( keyStates );
 		Keyboard.get().notify( controls.keyDown, controls.keyUp );
 		
 		creator = new EntityCreator( engine, config, keyStates );

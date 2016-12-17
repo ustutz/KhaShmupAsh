@@ -20,41 +20,41 @@ class MotionControlSystem extends ListIteratingSystem<MotionControlNode> {
 	
 	function updateNode( node:MotionControlNode, time:Float ):Void { //trace( time );
 		
-		var control = node.keyStates;
+		var keyStates = node.keyStates;
 		var position = node.position;
 		var size = node.size;
-		var controlsMotion = node.controlsMotion;
+		var controls = node.controls;
 		
-		if ( control.left ) {
+		if ( keyStates.left ) {
 			
-			position.translation.x -= controlsMotion.velocity.x * time;
+			position.translation.x -= controls.velocity.x * time;
 			
 			if ( position.translation.x < 0 ) {
 				position.translation.x = 0;
 			}
 		}
 		
-		if ( control.right ) {
+		if ( keyStates.right ) {
 			
-			position.translation.x += controlsMotion.velocity.x * time;
+			position.translation.x += controls.velocity.x * time;
 			
 			if ( position.translation.x > config.width - size.width ) {
 				position.translation.x = config.width - size.width;
 			}
 		}
 		
-		if ( control.up ) {
+		if ( keyStates.up ) {
 			
-			position.translation.y -= controlsMotion.velocity.y * time;
+			position.translation.y -= controls.velocity.y * time;
 			
 			if ( position.translation.y < 0 ) {
 				position.translation.y = 0;
 			}
 		}
 		
-		if ( control.down ) {
+		if ( keyStates.down ) {
 			
-			position.translation.y += controlsMotion.velocity.y * time;
+			position.translation.y += controls.velocity.y * time;
 			
 			if ( position.translation.y > config.height - size.height ) {
 				position.translation.y = config.height - size.height;

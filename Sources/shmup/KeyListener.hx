@@ -6,7 +6,7 @@ import shmup.components.KeyStates;
  * ...
  * @author Urs Stutz
  */
-class Controls {
+class KeyListener {
 	
 	var keyStates:KeyStates;
 

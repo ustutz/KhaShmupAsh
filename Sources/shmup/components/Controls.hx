@@ -5,12 +5,14 @@ import kha.math.FastVector2;
  * ...
  * @author Urs Stutz
  */
-class ControlsMotion {
+class Controls {
 	
 	public var velocity:FastVector2;
 
-	public function new( velocityX:Float, velocityY:Float ) {
-		velocity = new FastVector2( velocityX, velocityY );
+	public function new( velocity:FastVector2 ) {
+		
+		this.velocity = velocity;
+		
 	}
 	
 }

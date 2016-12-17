@@ -6,7 +6,7 @@ import kha.math.FastVector2;
 import shmup.components.Display;
 import shmup.components.GameState;
 import shmup.components.KeyStates;
-import shmup.components.ControlsMotion;
+import shmup.components.Controls;
 import shmup.components.Position;
 import shmup.components.Size;
 import shmup.components.types.Spaceship;
@@ -53,7 +53,7 @@ class EntityCreator {
 		.add( new Display( playerShip ))
 		.add( new Position( new FastVector2( centerX, centerY ), 0 ))
 		.add( new Size( playerShip.width, playerShip.height ))
-		.add( new ControlsMotion( 200, 200 ))
+		.add( new Controls( new FastVector2( 200, 200 )))
 		.add( keyStates )
 		.add( new Spaceship() );
 		
