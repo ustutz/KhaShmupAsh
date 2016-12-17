@@ -5,7 +5,10 @@ import kha.Assets;
 import kha.math.FastVector2;
 import shmup.components.Display;
 import shmup.components.GameState;
+import shmup.components.KeyControls;
+import shmup.components.Motion;
 import shmup.components.Position;
+import shmup.components.Size;
 import shmup.components.types.Spaceship;
 
 /**
@@ -15,19 +18,25 @@ import shmup.components.types.Spaceship;
 class EntityCreator {
 	
 	var engine:Engine;
+	var config:GameConfig;
+	var keyControls:KeyControls;
 
-	public function new( engine:Engine ) {
+	public function new( engine:Engine, config:GameConfig, keyControls:KeyControls ) {
+		
 		this.engine = engine;
+		this.config = config;
+		this.keyControls = keyControls;
 	}
 	
 	public function destroyEntity( entity:Entity ):Void {
 		engine.removeEntity( entity );
 	}
 	
-	public function createGamestate():Entity { //trace( "createGamestate" );
+	public function createGamestate( ):Entity { //trace( "createGamestate" );
 		
-		var gameEntity = new Entity();
-		gameEntity.add( new GameState() );
+		var gameEntity = new Entity()
+		.add( new GameState() );
+		
 		engine.addEntity( gameEntity );
 
 		return gameEntity;
@@ -35,12 +44,21 @@ class EntityCreator {
 	
 	public function createSpaceship( x:Float, y:Float ):Entity { //trace( "createSpaceship" );
 		
-		var spaceshipEntity = new Entity();
-		spaceshipEntity.add( new Display( Assets.images.playerShip ));
-		spaceshipEntity.add( new Position( new FastVector2( 300, 500 ), 0 ));
-		spaceshipEntity.add( new Spaceship() );
+		var playerShip = Assets.images.playerShip;
+		
+		var centerX = config.width / 2 - playerShip.width / 2;
+		var centerY = config.height / 2 - playerShip.height / 2;
+		
+		var spaceshipEntity = new Entity()
+		.add( new Display( playerShip ))
+		.add( new Position( new FastVector2( centerX, centerY ), 0 ))
+		.add( new Size( playerShip.width, playerShip.height ))
+		.add( new Motion( 200, 200 ))
+		.add( keyControls )
+		.add( new Spaceship() );
 		
 		engine.addEntity( spaceshipEntity );
 		return spaceshipEntity;
 	}
+	
 }

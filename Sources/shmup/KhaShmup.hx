@@ -8,9 +8,13 @@ import kha.Framebuffer;
 import kha.Image;
 import kha.Scheduler;
 import kha.System;
+import kha.input.Keyboard;
+import shmup.Controls;
 import shmup.EntityCreator;
 import shmup.GameConfig;
+import shmup.components.KeyControls;
 import shmup.systems.GameManager;
+import shmup.systems.MotionControlSystem;
 import shmup.systems.RenderSystem;
 import shmup.systems.SystemPriorities;
 
@@ -25,6 +29,7 @@ class KhaShmup {
 	var tickProvider:KhaFrameTickProvider;
 	
 	var initialized = false;
+	var controls:Controls;
 
 	public function new( screenWidth:Int, screenHeight:Int ) {
 		
@@ -35,14 +40,20 @@ class KhaShmup {
 	public function init():Void {
 		
 		engine = new Engine();
-		creator = new EntityCreator( engine );
 		config = new GameConfig( screenWidth, screenHeight, Color.fromValue( 0x26004d ));
+		
+		var keyControls = new KeyControls();
+		controls = new Controls( keyControls );
+		Keyboard.get().notify( controls.keyDown, controls.keyUp );
+		
+		creator = new EntityCreator( engine, config, keyControls );
 		
 		// create a buffer to draw to
 		var backbuffer = Image.createRenderTarget( screenWidth, screenHeight );
 		var renderSystem = new RenderSystem( config, backbuffer );
 		
 		engine.addSystem( new GameManager( creator, config ), SystemPriorities.preUpdate );
+		engine.addSystem( new MotionControlSystem( config ), SystemPriorities.update );
 		engine.addSystem( renderSystem, SystemPriorities.render );
 		
 		creator.createGamestate();
@@ -53,7 +64,7 @@ class KhaShmup {
 	
 	public function start():Void { //trace( "start" );
 		
-		tickProvider = new KhaFrameTickProvider();
+		tickProvider = new KhaFrameTickProvider( 10 );
 		tickProvider.add( engine.update );
 		tickProvider.start();
 	}

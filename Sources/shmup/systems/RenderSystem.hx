@@ -53,7 +53,7 @@ class RenderSystem extends System {
 			var display = node.display;
 			var position = node.position;
 			
-			g.drawImage( display.image, position.translation.x, position.translation.y );
+			g.drawImage( display.image, Std.int( position.translation.x ), Std.int( position.translation.y ));
 		}
 		
 		g.end();

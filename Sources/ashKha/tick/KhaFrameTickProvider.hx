@@ -9,9 +9,11 @@ import kha.Scheduler;
  */
 class KhaFrameTickProvider implements ITickProvider {
 
+	var framerate:Float;
+    var maximumFrameTime:Float;
+	
 	var timeTaskId:Int;
     var previousTime:Float;
-    var maximumFrameTime:Float;
     var signal:Signal1<Float>;
 
     public var playing(default, null):Bool;
@@ -22,18 +24,24 @@ class KhaFrameTickProvider implements ITickProvider {
      */
     public var timeAdjustment:Float = 1;
 	
-	public function new( maximumFrameTime:Float = 9999999999999999.0 ) {
+	public function new( framerate:Float = 60, maximumFrameTime:Float = 9999999999999999.0 ) {
 		
         playing = false;
         signal = new Signal1<Float>();
+		
+		if( framerate != 0 ) {
+			this.framerate = framerate;
+		} else {
+			framerate = 60;
+		}
         this.maximumFrameTime = maximumFrameTime;
 	}
 	
-    public function add(listener:Float->Void):Void {
+    public function add( listener:Float->Void ):Void {
         signal.add(listener);
     }
 
-    public function remove(listener:Float->Void):Void {
+    public function remove( listener:Float->Void ):Void {
         signal.remove(listener);
     }
 
@@ -41,9 +49,7 @@ class KhaFrameTickProvider implements ITickProvider {
 		
 		previousTime = Scheduler.time();
 		playing = true;
-		//timeTaskId = Scheduler.addTimeTask( dispatchTick, 0, 1 / 60 );
-		timeTaskId = Scheduler.addTimeTask( dispatchTick, 0, 1 / 5 );
-
+		timeTaskId = Scheduler.addTimeTask( dispatchTick, 0, 1 / framerate );
 	}
     
 	public function stop():Void {
@@ -57,11 +63,11 @@ class KhaFrameTickProvider implements ITickProvider {
 		var temp:Float = previousTime;
 		previousTime = Scheduler.time();
 		
-		var frameTime:Float = ( previousTime - temp ) / 1000;
+		var frameTime:Float = previousTime - temp;
 		
-		if (frameTime > maximumFrameTime)
+		if ( frameTime > maximumFrameTime )
 			frameTime = maximumFrameTime;
 		
-		signal.dispatch(frameTime * timeAdjustment);
+		signal.dispatch( frameTime * timeAdjustment );
     }
 }
