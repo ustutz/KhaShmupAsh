@@ -1,6 +1,6 @@
 package shmup;
 import kha.Key;
-import shmup.components.KeyControls;
+import shmup.components.KeyStates;
 
 /**
  * ...
@@ -8,23 +8,23 @@ import shmup.components.KeyControls;
  */
 class Controls {
 	
-	var keyControls:KeyControls;
+	var keyStates:KeyStates;
 
-	public function new( keyControls:KeyControls ) {
-		this.keyControls = keyControls;
+	public function new( keyStates:KeyStates ) {
+		this.keyStates = keyStates;
 	}
 	
 	public function keyDown( key:Key, value: String ) { 
 		
 		switch (key) {
 			case LEFT:
-				keyControls.left = true;
+				keyStates.left = true;
 			case RIGHT:
-				keyControls.right = true;
+				keyStates.right = true;
 			case UP:
-				keyControls.up = true;
+				keyStates.up = true;
 			case DOWN:
-				keyControls.down = true;
+				keyStates.down = true;
 			default:
 				// no-op
 		}
@@ -34,13 +34,13 @@ class Controls {
 		
 		switch (key) {
 			case LEFT:
-				keyControls.left = false;
+				keyStates.left = false;
 			case RIGHT:
-				keyControls.right = false;
+				keyStates.right = false;
 			case UP:
-				keyControls.up = false;
+				keyStates.up = false;
 			case DOWN:
-				keyControls.down = false;
+				keyStates.down = false;
 			default:
 				//no-op
 		}

@@ -1,7 +1,7 @@
 package shmup.nodes;
 import ash.core.Node;
-import shmup.components.Motion;
-import shmup.components.KeyControls;
+import shmup.components.ControlsMotion;
+import shmup.components.KeyStates;
 import shmup.components.Position;
 import shmup.components.Size;
 
@@ -11,9 +11,9 @@ import shmup.components.Size;
  */
 class MotionControlNode extends Node<MotionControlNode> {
 
-	public var keyControls:KeyControls;
+	public var keyStates:KeyStates;
 	public var position:Position;
 	public var size:Size;
-	public var motion:Motion;
+	public var controlsMotion:ControlsMotion;
 	
 }

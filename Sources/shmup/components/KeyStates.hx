@@ -4,7 +4,7 @@ package shmup.components;
  * ...
  * @author Urs Stutz
  */
-class KeyControls {
+class KeyStates {
 	
 	public var left:Bool;
 	public var right:Bool;

@@ -5,8 +5,8 @@ import kha.Assets;
 import kha.math.FastVector2;
 import shmup.components.Display;
 import shmup.components.GameState;
-import shmup.components.KeyControls;
-import shmup.components.Motion;
+import shmup.components.KeyStates;
+import shmup.components.ControlsMotion;
 import shmup.components.Position;
 import shmup.components.Size;
 import shmup.components.types.Spaceship;
@@ -19,13 +19,13 @@ class EntityCreator {
 	
 	var engine:Engine;
 	var config:GameConfig;
-	var keyControls:KeyControls;
+	var keyStates:KeyStates;
 
-	public function new( engine:Engine, config:GameConfig, keyControls:KeyControls ) {
+	public function new( engine:Engine, config:GameConfig, keyStates:KeyStates ) {
 		
 		this.engine = engine;
 		this.config = config;
-		this.keyControls = keyControls;
+		this.keyStates = keyStates;
 	}
 	
 	public function destroyEntity( entity:Entity ):Void {
@@ -53,8 +53,8 @@ class EntityCreator {
 		.add( new Display( playerShip ))
 		.add( new Position( new FastVector2( centerX, centerY ), 0 ))
 		.add( new Size( playerShip.width, playerShip.height ))
-		.add( new Motion( 200, 200 ))
-		.add( keyControls )
+		.add( new ControlsMotion( 200, 200 ))
+		.add( keyStates )
 		.add( new Spaceship() );
 		
 		engine.addEntity( spaceshipEntity );

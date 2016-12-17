@@ -5,7 +5,7 @@ import kha.math.FastVector2;
  * ...
  * @author Urs Stutz
  */
-class Motion {
+class ControlsMotion {
 	
 	public var velocity:FastVector2;
 

@@ -12,7 +12,7 @@ import kha.input.Keyboard;
 import shmup.Controls;
 import shmup.EntityCreator;
 import shmup.GameConfig;
-import shmup.components.KeyControls;
+import shmup.components.KeyStates;
 import shmup.systems.GameManager;
 import shmup.systems.MotionControlSystem;
 import shmup.systems.RenderSystem;
@@ -42,11 +42,11 @@ class KhaShmup {
 		engine = new Engine();
 		config = new GameConfig( screenWidth, screenHeight, Color.fromValue( 0x26004d ));
 		
-		var keyControls = new KeyControls();
-		controls = new Controls( keyControls );
+		var keyStates = new KeyStates();
+		controls = new Controls( keyStates );
 		Keyboard.get().notify( controls.keyDown, controls.keyUp );
 		
-		creator = new EntityCreator( engine, config, keyControls );
+		creator = new EntityCreator( engine, config, keyStates );
 		
 		// create a buffer to draw to
 		var backbuffer = Image.createRenderTarget( screenWidth, screenHeight );
