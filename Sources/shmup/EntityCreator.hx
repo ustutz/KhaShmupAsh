@@ -67,6 +67,7 @@ class EntityCreator {
 	public function createSpaceship( x:Float, y:Float ):Entity { //trace( "createSpaceship" );
 		
 		var playerShip = Assets.images.playerShip;
+		var gunSound = Assets.sounds.laserShot;
 		
 		var centerX = config.width / 2 - playerShip.width / 2;
 		var centerY = config.height / 2 - playerShip.height / 2;
@@ -76,7 +77,7 @@ class EntityCreator {
 		.add( new Size( playerShip.width, playerShip.height ))
 		.add( new Controls( 200.0, 200.0 ))
 		.add( keyStates )
-		.add( new Gun( 0.3 ))
+		.add( new Gun( gunSound, 0.3 ))
 		.add( new Display( playerShip ))
 		.add( new Spaceship() );
 		

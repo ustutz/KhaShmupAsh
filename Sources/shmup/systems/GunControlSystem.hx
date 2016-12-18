@@ -1,5 +1,6 @@
 package shmup.systems;
 import ash.tools.ListIteratingSystem;
+import kha.audio1.Audio;
 import shmup.EntityCreator;
 import shmup.nodes.GunControlNode;
 
@@ -29,6 +30,7 @@ class GunControlSystem extends ListIteratingSystem<GunControlNode> {
 		if ( keyStates.shoot && gun.cooldownLeft <= 0 ) {
 			
 			creator.createBullet( position, size.width );
+			Audio.play( gun.sound, false);
 			gun.cooldownLeft = gun.shotInterval;
 		}
 	}
