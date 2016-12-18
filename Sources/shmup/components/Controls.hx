@@ -7,11 +7,11 @@ import kha.math.FastVector2;
  */
 class Controls {
 	
-	public var velocity:FastVector2;
+	public var translation:FastVector2;
 
-	public function new( velocity:FastVector2 ) {
+	public function new( translation:FastVector2 ) {
 		
-		this.velocity = velocity;
+		this.translation = translation;
 		
 	}
 	

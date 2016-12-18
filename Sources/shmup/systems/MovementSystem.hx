@@ -12,8 +12,8 @@ class MovementSystem extends ListIteratingSystem<MovementNode> {
 
 	public function new( config:GameConfig ) {
 		
-		this.config = config;
 		super(MovementNode, updateNode);
+		this.config = config;
 		
 	}
 	

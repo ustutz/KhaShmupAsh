@@ -27,7 +27,7 @@ class MotionControlSystem extends ListIteratingSystem<MotionControlNode> {
 		
 		if ( keyStates.left ) {
 			
-			position.translation.x -= controls.velocity.x * time;
+			position.translation.x -= controls.translation.x * time;
 			
 			if ( position.translation.x < 0 ) {
 				position.translation.x = 0;
@@ -36,7 +36,7 @@ class MotionControlSystem extends ListIteratingSystem<MotionControlNode> {
 		
 		if ( keyStates.right ) {
 			
-			position.translation.x += controls.velocity.x * time;
+			position.translation.x += controls.translation.x * time;
 			
 			if ( position.translation.x > config.width - size.width ) {
 				position.translation.x = config.width - size.width;
@@ -45,7 +45,7 @@ class MotionControlSystem extends ListIteratingSystem<MotionControlNode> {
 		
 		if ( keyStates.up ) {
 			
-			position.translation.y -= controls.velocity.y * time;
+			position.translation.y -= controls.translation.y * time;
 			
 			if ( position.translation.y < 0 ) {
 				position.translation.y = 0;
@@ -54,7 +54,7 @@ class MotionControlSystem extends ListIteratingSystem<MotionControlNode> {
 		
 		if ( keyStates.down ) {
 			
-			position.translation.y += controls.velocity.y * time;
+			position.translation.y += controls.translation.y * time;
 			
 			if ( position.translation.y > config.height - size.height ) {
 				position.translation.y = config.height - size.height;

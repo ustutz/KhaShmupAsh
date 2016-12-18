@@ -54,12 +54,12 @@ class EntityCreator {
 		var centerY = config.height / 2 - playerShip.height / 2;
 		
 		var spaceshipEntity = new Entity()
-		.add( new Display( playerShip ))
-		.add( new Controls( new FastVector2( 200, 200 )))
-		.add( keyStates )
 		.add( new Position( new FastVector2( centerX, centerY )))
 		.add( new Size( playerShip.width, playerShip.height ))
+		.add( new Controls( new FastVector2( 200, 200 )))
+		.add( keyStates )
 		.add( new Gun( 0.3 ))
+		.add( new Display( playerShip ))
 		.add( new Spaceship() );
 		
 		engine.addEntity( spaceshipEntity );
@@ -71,10 +71,10 @@ class EntityCreator {
 		var bullet = Assets.images.laserShot;
 		
 		var bulletEntity = new Entity()		
-		.add( new Display( bullet ))
 		.add( new Position( new FastVector2( parentPosition.x + parentWidth / 2 - bullet.width / 2, parentPosition.y - bullet.height )))
 		.add( new Size( bullet.width, bullet.height ))
 		.add( new Motion( new FastVector2( 0, -600 )))
+		.add( new Display( bullet ))
 		.add( new Bullet() );
 		
 		engine.addEntity( bulletEntity );

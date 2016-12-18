@@ -13,7 +13,6 @@ class Gun {
 	public function new( shotInterval:FastFloat ) {
 		
 		this.shotInterval = shotInterval;
-		
 		cooldownLeft = 0;
 	}
 	

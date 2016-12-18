@@ -18,6 +18,7 @@ import shmup.systems.GunControlSystem;
 import shmup.systems.MotionControlSystem;
 import shmup.systems.MovementSystem;
 import shmup.systems.RenderSystem;
+import shmup.systems.ScreenClippingSystem;
 import shmup.systems.SystemPriorities;
 
 class KhaShmup {
@@ -58,6 +59,7 @@ class KhaShmup {
 		engine.addSystem( new MotionControlSystem( config ), SystemPriorities.update );
 		engine.addSystem( new GunControlSystem( creator ), SystemPriorities.update );
 		engine.addSystem( new MovementSystem( config ), SystemPriorities.update );
+		engine.addSystem( new ScreenClippingSystem( creator, config ), SystemPriorities.update );
 		engine.addSystem( renderSystem, SystemPriorities.render );
 		
 		
