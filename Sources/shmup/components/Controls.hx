@@ -1,4 +1,5 @@
 package shmup.components;
+import kha.FastFloat;
 import kha.math.FastVector2;
 
 /**
@@ -7,12 +8,13 @@ import kha.math.FastVector2;
  */
 class Controls {
 	
-	public var translation:FastVector2;
+	public var x:FastFloat;
+	public var y:FastFloat;
 
-	public function new( translation:FastVector2 ) {
+	public function new( x:FastFloat, y:FastFloat ) {
 		
-		this.translation = translation;
-		
+		this.x = x;
+		this.y = y;
 	}
 	
 }

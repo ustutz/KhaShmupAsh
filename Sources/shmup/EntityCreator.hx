@@ -1,6 +1,7 @@
 package shmup;
 import ash.core.Engine;
 import ash.core.Entity;
+import ash.tools.ComponentPool;
 import kha.Assets;
 import kha.FastFloat;
 import kha.math.FastVector2;
@@ -33,7 +34,24 @@ class EntityCreator {
 	}
 	
 	public function destroyEntity( entity:Entity ):Void {
+		
 		engine.removeEntity( entity );
+		
+		if ( entity.has( Position )) {
+			ComponentPool.dispose( entity.get( Position ));
+		}
+		if ( entity.has( Size )) {
+			ComponentPool.dispose( entity.get( Size ));
+		}
+		if ( entity.has( Motion )) {
+			ComponentPool.dispose( entity.get( Motion ));
+		}
+		if ( entity.has( Display )) {
+			ComponentPool.dispose( entity.get( Display ));
+		}
+		if ( entity.has( Bullet )) {
+			ComponentPool.dispose( entity.get( Bullet ));
+		}
 	}
 	
 	public function createGamestate( ):Entity { //trace( "createGamestate" );
@@ -54,9 +72,9 @@ class EntityCreator {
 		var centerY = config.height / 2 - playerShip.height / 2;
 		
 		var spaceshipEntity = new Entity()
-		.add( new Position( new FastVector2( centerX, centerY )))
+		.add( new Position( centerX, centerY ))
 		.add( new Size( playerShip.width, playerShip.height ))
-		.add( new Controls( new FastVector2( 200, 200 )))
+		.add( new Controls( 200.0, 200.0 ))
 		.add( keyStates )
 		.add( new Gun( 0.3 ))
 		.add( new Display( playerShip ))
@@ -66,16 +84,31 @@ class EntityCreator {
 		return spaceshipEntity;
 	}
 	
-	public function createBullet( parentPosition:FastVector2, parentWidth:Int ):Entity { //trace( "createBullet" );
+	public function createBullet( parentPosition:Position, parentWidth:Int ):Entity { //trace( "createBullet" );
 		
 		var bullet = Assets.images.laserShot;
 		
-		var bulletEntity = new Entity()		
-		.add( new Position( new FastVector2( parentPosition.x + parentWidth / 2 - bullet.width / 2, parentPosition.y - bullet.height )))
-		.add( new Size( bullet.width, bullet.height ))
-		.add( new Motion( new FastVector2( 0, -600 )))
-		.add( new Display( bullet ))
-		.add( new Bullet() );
+		var position = ComponentPool.get( Position );
+		position.x = parentPosition.x + parentWidth / 2 - bullet.width / 2;
+		position.y = parentPosition.y - bullet.height;
+		
+		var size = ComponentPool.get( Size );
+		size.width = bullet.width;
+		size.height = bullet.height;
+		
+		var motion = ComponentPool.get( Motion );
+		motion.x = 0;
+		motion.y = -600;
+		
+		var display = ComponentPool.get( Display );
+		display.image = bullet;
+		
+		var bulletEntity = new Entity()
+		.add( position )
+		.add( size )
+		.add( motion )
+		.add( display )
+		.add( ComponentPool.get( Bullet ));
 		
 		engine.addEntity( bulletEntity );
 		

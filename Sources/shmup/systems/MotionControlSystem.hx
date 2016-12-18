@@ -27,37 +27,37 @@ class MotionControlSystem extends ListIteratingSystem<MotionControlNode> {
 		
 		if ( keyStates.left ) {
 			
-			position.translation.x -= controls.translation.x * time;
+			position.x -= controls.x * time;
 			
-			if ( position.translation.x < 0 ) {
-				position.translation.x = 0;
+			if ( position.x < 0 ) {
+				position.x = 0;
 			}
 		}
 		
 		if ( keyStates.right ) {
 			
-			position.translation.x += controls.translation.x * time;
+			position.x += controls.x * time;
 			
-			if ( position.translation.x > config.width - size.width ) {
-				position.translation.x = config.width - size.width;
+			if ( position.x > config.width - size.width ) {
+				position.x = config.width - size.width;
 			}
 		}
 		
 		if ( keyStates.up ) {
 			
-			position.translation.y -= controls.translation.y * time;
+			position.y -= controls.y * time;
 			
-			if ( position.translation.y < 0 ) {
-				position.translation.y = 0;
+			if ( position.y < 0 ) {
+				position.y = 0;
 			}
 		}
 		
 		if ( keyStates.down ) {
 			
-			position.translation.y += controls.translation.y * time;
+			position.y += controls.y * time;
 			
-			if ( position.translation.y > config.height - size.height ) {
-				position.translation.y = config.height - size.height;
+			if ( position.y > config.height - size.height ) {
+				position.y = config.height - size.height;
 			}
 		}
 		

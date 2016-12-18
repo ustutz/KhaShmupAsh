@@ -26,22 +26,22 @@ class ScreenClippingSystem extends ListIteratingSystem<ScreenClippingNode> {
 		var size = node.size;
 		var motion = node.motion;
 		
-		if ( motion.velocity.x < 0 ) {
-			if ( position.translation.x + size.width < 0 ) {
+		if ( motion.x < 0 ) {
+			if ( position.x + size.width < 0 ) {
 				creator.destroyEntity( node.entity );
 			}
-		} else if ( motion.velocity.x > 0 ) {
-			if ( position.translation.x > config.width ) {
+		} else if ( motion.x > 0 ) {
+			if ( position.x > config.width ) {
 				creator.destroyEntity( node.entity );
 			}
 		}
 		
-		if ( motion.velocity.y < 0 ) {
-			if ( position.translation.y + size.height < 0 ) {
+		if ( motion.y < 0 ) {
+			if ( position.y + size.height < 0 ) {
 				creator.destroyEntity( node.entity );
 			}
-		} else if ( motion.velocity.y > 0 ) {
-			if ( position.translation.y > config.height ) {
+		} else if ( motion.y > 0 ) {
+			if ( position.y > config.height ) {
 				creator.destroyEntity( node.entity );
 			}
 		}

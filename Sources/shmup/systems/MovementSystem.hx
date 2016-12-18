@@ -22,8 +22,8 @@ class MovementSystem extends ListIteratingSystem<MovementNode> {
 		var position = node.position;
 		var motion = node.motion;
 		
-		position.translation.x += motion.velocity.x * time;
-		position.translation.y += motion.velocity.y * time;
+		position.x += motion.x * time;
+		position.y += motion.y * time;
 		
 	}
 }

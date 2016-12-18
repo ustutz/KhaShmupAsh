@@ -5,9 +5,11 @@ import kha.math.FastVector2;
 
 class Position {
     
-	public var translation:FastVector2;
+	public var x:FastFloat;
+	public var y:FastFloat;
 
-    public function new( translation:FastVector2 ) {
-        this.translation = translation;
+    public function new( x:FastFloat = 0, y:FastFloat = 0 ) {
+		this.x = x;
+		this.y = y;
     }
 }

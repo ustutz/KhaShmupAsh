@@ -26,9 +26,9 @@ class GunControlSystem extends ListIteratingSystem<GunControlNode> {
 		
 		gun.cooldownLeft -= time;
 		
-		if ( keyStates.shoot && gun.cooldownLeft <= 0 ) { trace( "shoot" );
+		if ( keyStates.shoot && gun.cooldownLeft <= 0 ) {
 			
-			creator.createBullet( position.translation, size.width );
+			creator.createBullet( position, size.width );
 			gun.cooldownLeft = gun.shotInterval;
 		}
 	}
