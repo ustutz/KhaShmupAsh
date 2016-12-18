@@ -14,7 +14,9 @@ import shmup.EntityCreator;
 import shmup.GameConfig;
 import shmup.components.KeyStates;
 import shmup.systems.GameManager;
+import shmup.systems.GunControlSystem;
 import shmup.systems.MotionControlSystem;
+import shmup.systems.MovementSystem;
 import shmup.systems.RenderSystem;
 import shmup.systems.SystemPriorities;
 
@@ -26,10 +28,11 @@ class KhaShmup {
 	var engine:Engine;
 	var creator:EntityCreator;
 	var config:GameConfig;
+	var keyListener:KeyListener;
+	
 	var tickProvider:KhaFrameTickProvider;
 	
 	var initialized = false;
-	var controls:KeyListener;
 
 	public function new( screenWidth:Int, screenHeight:Int ) {
 		
@@ -41,12 +44,11 @@ class KhaShmup {
 		
 		engine = new Engine();
 		config = new GameConfig( screenWidth, screenHeight, Color.fromValue( 0x26004d ));
-		
 		var keyStates = new KeyStates();
-		controls = new KeyListener( keyStates );
-		Keyboard.get().notify( controls.keyDown, controls.keyUp );
 		
 		creator = new EntityCreator( engine, config, keyStates );
+		creator.createGamestate();
+		
 		
 		// create a buffer to draw to
 		var backbuffer = Image.createRenderTarget( screenWidth, screenHeight );
@@ -54,17 +56,21 @@ class KhaShmup {
 		
 		engine.addSystem( new GameManager( creator, config ), SystemPriorities.preUpdate );
 		engine.addSystem( new MotionControlSystem( config ), SystemPriorities.update );
+		engine.addSystem( new GunControlSystem( creator ), SystemPriorities.update );
+		engine.addSystem( new MovementSystem( config ), SystemPriorities.update );
 		engine.addSystem( renderSystem, SystemPriorities.render );
 		
-		creator.createGamestate();
 		
 		System.notifyOnRender( renderSystem.setFramebuffer );
+		
+		keyListener = new KeyListener( keyStates );
+		Keyboard.get().notify( keyListener.keyDown, keyListener.keyUp );
 
 	}
 	
 	public function start():Void { //trace( "start" );
 		
-		tickProvider = new KhaFrameTickProvider( 10 );
+		tickProvider = new KhaFrameTickProvider( 60 );
 		tickProvider.add( engine.update );
 		tickProvider.start();
 	}

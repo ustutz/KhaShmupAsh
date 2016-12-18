@@ -25,6 +25,10 @@ class KeyListener {
 				keyStates.up = true;
 			case DOWN:
 				keyStates.down = true;
+			case CHAR:
+				if (value == "z") {
+					keyStates.shoot = true;
+				}
 			default:
 				// no-op
 		}
@@ -41,6 +45,10 @@ class KeyListener {
 				keyStates.up = false;
 			case DOWN:
 				keyStates.down = false;
+			case CHAR:
+				if (value == "z") {
+					keyStates.shoot = false;
+				}
 			default:
 				//no-op
 		}

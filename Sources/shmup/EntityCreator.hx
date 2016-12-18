@@ -2,13 +2,17 @@ package shmup;
 import ash.core.Engine;
 import ash.core.Entity;
 import kha.Assets;
+import kha.FastFloat;
 import kha.math.FastVector2;
 import shmup.components.Display;
 import shmup.components.GameState;
 import shmup.components.KeyStates;
 import shmup.components.Controls;
+import shmup.components.Motion;
 import shmup.components.Position;
 import shmup.components.Size;
+import shmup.components.types.Bullet;
+import shmup.components.types.Gun;
 import shmup.components.types.Spaceship;
 
 /**
@@ -51,14 +55,31 @@ class EntityCreator {
 		
 		var spaceshipEntity = new Entity()
 		.add( new Display( playerShip ))
-		.add( new Position( new FastVector2( centerX, centerY ), 0 ))
-		.add( new Size( playerShip.width, playerShip.height ))
 		.add( new Controls( new FastVector2( 200, 200 )))
 		.add( keyStates )
+		.add( new Position( new FastVector2( centerX, centerY )))
+		.add( new Size( playerShip.width, playerShip.height ))
+		.add( new Gun( 0.3 ))
 		.add( new Spaceship() );
 		
 		engine.addEntity( spaceshipEntity );
 		return spaceshipEntity;
+	}
+	
+	public function createBullet( parentPosition:FastVector2, parentWidth:Int ):Entity { //trace( "createBullet" );
+		
+		var bullet = Assets.images.laserShot;
+		
+		var bulletEntity = new Entity()		
+		.add( new Display( bullet ))
+		.add( new Position( new FastVector2( parentPosition.x + parentWidth / 2 - bullet.width / 2, parentPosition.y - bullet.height )))
+		.add( new Size( bullet.width, bullet.height ))
+		.add( new Motion( new FastVector2( 0, -600 )))
+		.add( new Bullet() );
+		
+		engine.addEntity( bulletEntity );
+		
+		return bulletEntity;
 	}
 	
 }

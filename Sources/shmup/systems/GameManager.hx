@@ -41,7 +41,6 @@ class GameManager extends System {
 		for ( node in gameNodes ) {
 			
 			if ( spaceships.empty ) {
-				
 				creator.createSpaceship( config.width / 2, config.height * 0.8 );
 			}
 		}
