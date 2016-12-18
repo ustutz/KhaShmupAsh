@@ -13,6 +13,7 @@ import shmup.KeyListener;
 import shmup.EntityCreator;
 import shmup.GameConfig;
 import shmup.components.KeyStates;
+import shmup.systems.EnemySpawnerSystem;
 import shmup.systems.GameManager;
 import shmup.systems.GunControlSystem;
 import shmup.systems.MotionControlSystem;
@@ -49,13 +50,14 @@ class KhaShmup {
 		
 		creator = new EntityCreator( engine, config, keyStates );
 		creator.createGamestate();
-		
+		creator.createEnemySpawner( config );
 		
 		// create a buffer to draw to
 		var backbuffer = Image.createRenderTarget( screenWidth, screenHeight );
 		var renderSystem = new RenderSystem( config, backbuffer );
 		
 		engine.addSystem( new GameManager( creator, config ), SystemPriorities.preUpdate );
+		engine.addSystem( new EnemySpawnerSystem( creator, config ), SystemPriorities.update );
 		engine.addSystem( new MotionControlSystem( config ), SystemPriorities.update );
 		engine.addSystem( new GunControlSystem( creator ), SystemPriorities.update );
 		engine.addSystem( new MovementSystem( config ), SystemPriorities.update );

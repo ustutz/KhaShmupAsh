@@ -6,11 +6,11 @@ package shmup;
  */
 class GameConfig {
 
-	public var width:Float;
-	public var height:Float;
+	public var width:Int;
+	public var height:Int;
 	public var bgColor:Int;
 	
-	public function new( width:Float, height:Float, bgColor:Int ) {
+	public function new( width:Int, height:Int, bgColor:Int ) {
 		
 		this.width = width;
 		this.height = height;

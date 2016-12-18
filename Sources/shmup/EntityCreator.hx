@@ -4,6 +4,7 @@ import ash.core.Entity;
 import ash.tools.ComponentPool;
 import kha.Assets;
 import kha.FastFloat;
+import kha.Image;
 import kha.math.FastVector2;
 import shmup.components.Display;
 import shmup.components.GameState;
@@ -13,6 +14,8 @@ import shmup.components.Motion;
 import shmup.components.Position;
 import shmup.components.Size;
 import shmup.components.types.Bullet;
+import shmup.components.types.Enemy;
+import shmup.components.types.EnemySpawner;
 import shmup.components.types.Gun;
 import shmup.components.types.Spaceship;
 
@@ -116,4 +119,43 @@ class EntityCreator {
 		return bulletEntity;
 	}
 	
+	public function createEnemySpawner( config:GameConfig ):Entity {
+		
+		var enemySpawnerEntity = new Entity()
+		.add( new EnemySpawner( Assets.images.enemyShip, 1, 3, 0, config.width, config.height ));
+		
+		engine.addEntity( enemySpawnerEntity );
+		
+		return enemySpawnerEntity;
+	}
+	
+	public function createEnemy( x:FastFloat, y:FastFloat, enemyImage:Image ):Entity {
+		
+		var position = ComponentPool.get( Position );
+		position.x = x;
+		position.y = y;
+		
+		var size = ComponentPool.get( Size );
+		size.width = enemyImage.width;
+		size.height = enemyImage.height;
+		
+		var motion = ComponentPool.get( Motion );
+		motion.x = 0;
+		motion.y = 200;
+		
+		var display = ComponentPool.get( Display );
+		display.image = enemyImage;
+		
+		var enemyEntity = new Entity()
+		.add( position )
+		.add( size )
+		.add( motion )
+		.add( display )
+		.add( ComponentPool.get( Enemy ));
+		
+		engine.addEntity( enemyEntity );
+		
+		return enemyEntity;
+		
+	}
 }
