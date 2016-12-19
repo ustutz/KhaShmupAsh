@@ -1,5 +1,6 @@
 package shmup.systems;
 import ash.tools.ListIteratingSystem;
+import kha.Image;
 import shmup.EntityCreator;
 import shmup.GameConfig;
 import shmup.nodes.EnemySpawnerNode;
@@ -31,7 +32,7 @@ class EnemySpawnerSystem extends ListIteratingSystem<EnemySpawnerNode> {
 			enemySpawner.currentTime = 0;
 			enemySpawner.spawnNextTime = generateRandomSpawnTime( enemySpawner.spawnMinTime, enemySpawner.spawnNextTime );
 			var randomX = generateRandomX( enemySpawner.minSpawnX, enemySpawner.maxSpawnX - enemySpawner.enemyImage.width );
-			creator.createEnemy( randomX, -enemySpawner.enemyImage.height, enemySpawner.enemyImage );
+			creator.createEnemy( randomX, -enemySpawner.enemyImage.height, enemySpawner.enemyImage, enemySpawner.explosionFrames );
 		}
 	}
 	

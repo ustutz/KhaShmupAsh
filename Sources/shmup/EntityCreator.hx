@@ -138,15 +138,21 @@ class EntityCreator {
 	
 	public function createEnemySpawner( config:GameConfig ):Entity {
 		
+		var explosionFrames = new Array<Image>();
+		explosionFrames.push( Assets.images.smokeOrange0 );
+		explosionFrames.push( Assets.images.smokeOrange1 );
+		explosionFrames.push( Assets.images.smokeOrange2 );
+		explosionFrames.push( Assets.images.smokeOrange3 );
+		
 		var enemySpawnerEntity = new Entity()
-		.add( new EnemySpawner( Assets.images.enemyShip, 1, 3, 0, config.width, config.height ));
+		.add( new EnemySpawner( Assets.images.enemyShip, explosionFrames, 1, 3, 0, config.width, config.height ));
 		
 		engine.addEntity( enemySpawnerEntity );
 		
 		return enemySpawnerEntity;
 	}
 	
-	public function createEnemy( x:FastFloat, y:FastFloat, enemyImage:Image ):Entity {
+	public function createEnemy( x:FastFloat, y:FastFloat, enemyImage:Image, explosionFrames:Array<Image> ):Entity {
 		
 		var position = ComponentPool.get( Position );
 		position.x = x;
@@ -172,18 +178,13 @@ class EntityCreator {
 		var explosionSound = ComponentPool.get( ExplosionSound );
 		explosionSound.sound = Assets.sounds.enemyExplosion;
 		
-		var enemyEntity = new Entity();
-		var esm = new EntityStateMachine( enemyEntity );
-		
-		var explosionFrames = new Array<Image>();
-		explosionFrames.push( Assets.images.smokeOrange0 );
-		explosionFrames.push( Assets.images.smokeOrange1 );
-		explosionFrames.push( Assets.images.smokeOrange2 );
-		explosionFrames.push( Assets.images.smokeOrange3 );
-		
 		var explosionAnimation = ComponentPool.get( Animation );
 		explosionAnimation.frameDuration = 0.1;
 		explosionAnimation.frames = explosionFrames;
+		
+		
+		var enemyEntity = new Entity();
+		var esm = new EntityStateMachine( enemyEntity );
 		
 		esm.createState( "playing" )
 		.add( Hitbox ).withInstance( hitbox )

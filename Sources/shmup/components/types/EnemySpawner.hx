@@ -9,6 +9,7 @@ import kha.Image;
 class EnemySpawner {
 	
 	public var enemyImage:Image;
+	public var explosionFrames:Array<Image>;
 	public var spawnMinTime:FastFloat;
 	public var spawnMaxTime:FastFloat;
 	public var minSpawnX:Int;
@@ -18,9 +19,10 @@ class EnemySpawner {
 	public var currentTime:FastFloat;
 	public var spawnNextTime:FastFloat;
 
-	public function new( enemyImage:Image, spawnMinTime:FastFloat, spawnMaxTime:FastFloat, ?minSpawnX:Int = 0, maxSpawnX:Int = 0, maxPositionY:Int = 600 ) {
+	public function new( enemyImage:Image, explosionFrames:Array<Image>, spawnMinTime:FastFloat, spawnMaxTime:FastFloat, ?minSpawnX:Int = 0, maxSpawnX:Int = 0, maxPositionY:Int = 600 ) {
 		
 		this.enemyImage = enemyImage;
+		this.explosionFrames = explosionFrames;
 		this.spawnMinTime = spawnMinTime;
 		this.spawnMaxTime = spawnMaxTime;
 		this.minSpawnX = minSpawnX;
