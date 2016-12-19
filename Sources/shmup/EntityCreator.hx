@@ -8,6 +8,7 @@ import kha.Image;
 import kha.math.FastVector2;
 import shmup.components.Display;
 import shmup.components.GameState;
+import shmup.components.Hitbox;
 import shmup.components.KeyStates;
 import shmup.components.Controls;
 import shmup.components.Motion;
@@ -75,7 +76,7 @@ class EntityCreator {
 	public function createSpaceship( x:Float, y:Float ):Entity { //trace( "createSpaceship" );
 		
 		var playerShip = Assets.images.playerShip;
-		var gunSound = Assets.sounds.laserShot;
+		var gunSound = Assets.sounds.bulletShoot;
 		
 		var centerX = config.width / 2 - playerShip.width / 2;
 		var centerY = config.height / 2 - playerShip.height / 2;
@@ -95,7 +96,7 @@ class EntityCreator {
 	
 	public function createBullet( parentPosition:Position, parentWidth:Int ):Entity { //trace( "createBullet" );
 		
-		var bullet = Assets.images.laserShot;
+		var bullet = Assets.images.bullet;
 		
 		var position = ComponentPool.get( Position );
 		position.x = parentPosition.x + parentWidth / 2 - bullet.width / 2;
@@ -104,6 +105,12 @@ class EntityCreator {
 		var size = ComponentPool.get( Size );
 		size.width = bullet.width;
 		size.height = bullet.height;
+		
+		var hitbox = ComponentPool.get( Hitbox );
+		hitbox.offsetX = 0;
+		hitbox.offsetY = 0;
+		hitbox.width = bullet.width;
+		hitbox.height = bullet.height;
 		
 		var motion = ComponentPool.get( Motion );
 		motion.x = 0;
@@ -115,6 +122,7 @@ class EntityCreator {
 		var bulletEntity = new Entity()
 		.add( position )
 		.add( size )
+		.add( hitbox )
 		.add( motion )
 		.add( display )
 		.add( ComponentPool.get( Bullet ));
@@ -144,6 +152,12 @@ class EntityCreator {
 		size.width = enemyImage.width;
 		size.height = enemyImage.height;
 		
+		var hitbox = ComponentPool.get( Hitbox );
+		hitbox.offsetX = 2;
+		hitbox.offsetY = 0;
+		hitbox.width = enemyImage.width -4;
+		hitbox.height = Std.int( enemyImage.height / 2 );
+		
 		var motion = ComponentPool.get( Motion );
 		motion.x = 0;
 		motion.y = 200;
@@ -154,6 +168,7 @@ class EntityCreator {
 		var enemyEntity = new Entity()
 		.add( position )
 		.add( size )
+		.add( hitbox )
 		.add( motion )
 		.add( display )
 		.add( ComponentPool.get( Enemy ));

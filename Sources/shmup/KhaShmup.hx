@@ -13,6 +13,7 @@ import shmup.KeyListener;
 import shmup.EntityCreator;
 import shmup.GameConfig;
 import shmup.components.KeyStates;
+import shmup.systems.CollisionSystem;
 import shmup.systems.EnemySpawnerSystem;
 import shmup.systems.GameManager;
 import shmup.systems.GunControlSystem;
@@ -61,7 +62,8 @@ class KhaShmup {
 		engine.addSystem( new MotionControlSystem( config ), SystemPriorities.update );
 		engine.addSystem( new GunControlSystem( creator ), SystemPriorities.update );
 		engine.addSystem( new MovementSystem( config ), SystemPriorities.update );
-		engine.addSystem( new ScreenClippingSystem( creator, config ), SystemPriorities.update );
+		engine.addSystem( new ScreenClippingSystem( creator, config ), SystemPriorities.resolveCollisions );
+		engine.addSystem( new CollisionSystem( creator ), SystemPriorities.resolveCollisions );
 		engine.addSystem( renderSystem, SystemPriorities.render );
 		
 		
