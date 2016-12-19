@@ -11,7 +11,7 @@ class ExplosionSound {
 
 	public function new( sound:Sound = null ) {
 		
-		this.sound = sound;
+		this.sound = ( sound == null ) ? new Sound() : sound;
 	}
 	
 }

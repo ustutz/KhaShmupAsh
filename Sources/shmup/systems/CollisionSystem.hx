@@ -41,14 +41,14 @@ class CollisionSystem extends System {
 	
 	override public function update( time:Float ):Void {
 		
-		for ( bullet in bullets ) { //trace( "bullet" );
-			for ( enemy in enemies ) { //trace( "enemy" );
-				if ( overlaps( bullet.position, bullet.hitbox, enemy.position, enemy.hitbox )) {
+		for ( bulletNode in bullets ) {
+			for ( enemyNode in enemies ) {
+				if ( overlaps( bulletNode.position, bulletNode.hitbox, enemyNode.position, enemyNode.hitbox )) {
 					
-					Audio.play( enemy.explosionSound.sound, false );
+					Audio.play( enemyNode.explosionSound.sound, false );
 					
-					creator.destroyEntity( bullet.entity );
-					creator.destroyEntity( enemy.entity );
+					creator.destroyEntity( bulletNode.entity );
+					enemyNode.enemy.esm.changeState( "exploding" );
 					break;
 				}
 			}

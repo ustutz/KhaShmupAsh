@@ -1,17 +1,20 @@
 package shmup;
 import ash.core.Engine;
 import ash.core.Entity;
+import ash.fsm.EntityStateMachine;
 import ash.tools.ComponentPool;
 import kha.Assets;
 import kha.FastFloat;
 import kha.Image;
 import kha.math.FastVector2;
+import shmup.components.Animation;
 import shmup.components.Display;
 import shmup.components.ExplosionSound;
 import shmup.components.Hitbox;
 import shmup.components.KeyStates;
 import shmup.components.Controls;
 import shmup.components.Motion;
+import shmup.components.PlayState;
 import shmup.components.Position;
 import shmup.components.Size;
 import shmup.components.types.Bullet;
@@ -79,11 +82,11 @@ class EntityCreator {
 		var playerShip = Assets.images.playerShip;
 		var gunSound = Assets.sounds.bulletShoot;
 		
-		var centerX = config.width / 2 - playerShip.width / 2;
-		var centerY = config.height / 2 - playerShip.height / 2;
+		var startX = config.width / 2 - playerShip.width / 2;
+		var startY = config.height - playerShip.height - 40;
 		
 		var spaceshipEntity = new Entity()
-		.add( new Position( centerX, centerY ))
+		.add( new Position( startX, startY ))
 		.add( new Size( playerShip.width, playerShip.height ))
 		.add( new Controls( 200.0, 200.0 ))
 		.add( keyStates )
@@ -169,15 +172,34 @@ class EntityCreator {
 		var explosionSound = ComponentPool.get( ExplosionSound );
 		explosionSound.sound = Assets.sounds.enemyExplosion;
 		
-		var enemyEntity = new Entity()
+		var enemyEntity = new Entity();
+		var esm = new EntityStateMachine( enemyEntity );
+		
+		var explosionFrames = new Array<Image>();
+		explosionFrames.push( Assets.images.smokeOrange0 );
+		explosionFrames.push( Assets.images.smokeOrange1 );
+		explosionFrames.push( Assets.images.smokeOrange2 );
+		explosionFrames.push( Assets.images.smokeOrange3 );
+		
+		var explosionAnimation = ComponentPool.get( Animation );
+		explosionAnimation.frameDuration = 0.1;
+		explosionAnimation.frames = explosionFrames;
+		
+		esm.createState( "playing" )
+		.add( Hitbox ).withInstance( hitbox )
+		.add( Motion ).withInstance( motion )
+		.add( ExplosionSound ).withInstance( explosionSound );
+		
+		esm.createState( "exploding" )
+		.add( Animation ).withInstance( explosionAnimation );
+		
+		enemyEntity
 		.add( position )
 		.add( size )
-		.add( hitbox )
-		.add( motion )
 		.add( display )
-		.add( explosionSound )
-		.add( ComponentPool.get( Enemy ));
+		.add( new Enemy( esm ));
 		
+		esm.changeState( "playing" );
 		engine.addEntity( enemyEntity );
 		
 		return enemyEntity;
