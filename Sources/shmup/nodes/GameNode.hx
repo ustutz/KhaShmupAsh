@@ -1,6 +1,6 @@
 package shmup.nodes;
 import ash.core.Node;
-import shmup.components.GameState;
+import shmup.components.types.GameState;
 
 /**
  * ...

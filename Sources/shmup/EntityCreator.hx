@@ -8,7 +8,6 @@ import kha.Image;
 import kha.math.FastVector2;
 import shmup.components.Display;
 import shmup.components.ExplosionSound;
-import shmup.components.GameState;
 import shmup.components.Hitbox;
 import shmup.components.KeyStates;
 import shmup.components.Controls;
@@ -18,6 +17,7 @@ import shmup.components.Size;
 import shmup.components.types.Bullet;
 import shmup.components.types.Enemy;
 import shmup.components.types.EnemySpawner;
+import shmup.components.types.GameState;
 import shmup.components.types.Gun;
 import shmup.components.types.Spaceship;
 

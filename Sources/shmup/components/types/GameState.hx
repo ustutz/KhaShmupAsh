@@ -1,4 +1,4 @@
-package shmup.components;
+package shmup.components.types;
 
 /**
  * ...
