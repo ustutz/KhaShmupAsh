@@ -53,15 +53,13 @@ class EntityCreator {
 			ComponentPool.dispose( entity.get( Display ));
 		}
 		
-		if ( entity.has( Entity )) {
-			ComponentPool.dispose( entity.get( Entity ));
-		}
 		if ( entity.has( Enemy )) {
 			ComponentPool.dispose( entity.get( Enemy ));
 		}
 		if ( entity.has( Bullet )) {
 			ComponentPool.dispose( entity.get( Bullet ));
 		}
+		
 	}
 	
 	public function createGamestate( ):Entity { //trace( "createGamestate" );
@@ -114,7 +112,7 @@ class EntityCreator {
 		var display = ComponentPool.get( Display );
 		display.image = bullet;
 		
-		var bulletEntity = ComponentPool.get( Entity )
+		var bulletEntity = new Entity()
 		.add( position )
 		.add( size )
 		.add( motion )
@@ -153,7 +151,7 @@ class EntityCreator {
 		var display = ComponentPool.get( Display );
 		display.image = enemyImage;
 		
-		var enemyEntity = ComponentPool.get( Entity )
+		var enemyEntity = new Entity()
 		.add( position )
 		.add( size )
 		.add( motion )
