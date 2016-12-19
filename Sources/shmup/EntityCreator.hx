@@ -7,6 +7,7 @@ import kha.FastFloat;
 import kha.Image;
 import kha.math.FastVector2;
 import shmup.components.Display;
+import shmup.components.ExplosionSound;
 import shmup.components.GameState;
 import shmup.components.Hitbox;
 import shmup.components.KeyStates;
@@ -165,12 +166,16 @@ class EntityCreator {
 		var display = ComponentPool.get( Display );
 		display.image = enemyImage;
 		
+		var explosionSound = ComponentPool.get( ExplosionSound );
+		explosionSound.sound = Assets.sounds.enemyExplosion;
+		
 		var enemyEntity = new Entity()
 		.add( position )
 		.add( size )
 		.add( hitbox )
 		.add( motion )
 		.add( display )
+		.add( explosionSound )
 		.add( ComponentPool.get( Enemy ));
 		
 		engine.addEntity( enemyEntity );

@@ -1,5 +1,6 @@
 package shmup.nodes;
 import ash.core.Node;
+import shmup.components.ExplosionSound;
 import shmup.components.Hitbox;
 import shmup.components.Position;
 import shmup.components.types.Enemy;
@@ -13,5 +14,6 @@ class EnemyCollisionNode extends Node<EnemyCollisionNode> {
 	public var enemy:Enemy;
 	public var position:Position;
 	public var hitbox:Hitbox;
+	public var explosionSound:ExplosionSound;
 	
 }

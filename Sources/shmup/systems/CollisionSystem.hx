@@ -2,6 +2,7 @@ package shmup.systems;
 import ash.core.Engine;
 import ash.core.NodeList;
 import ash.core.System;
+import kha.audio1.Audio;
 import shmup.EntityCreator;
 import shmup.components.Hitbox;
 import shmup.components.Position;
@@ -43,6 +44,9 @@ class CollisionSystem extends System {
 		for ( bullet in bullets ) { //trace( "bullet" );
 			for ( enemy in enemies ) { //trace( "enemy" );
 				if ( overlaps( bullet.position, bullet.hitbox, enemy.position, enemy.hitbox )) {
+					
+					Audio.play( enemy.explosionSound.sound, false );
+					
 					creator.destroyEntity( bullet.entity );
 					creator.destroyEntity( enemy.entity );
 					break;
