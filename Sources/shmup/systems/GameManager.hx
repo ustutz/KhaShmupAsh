@@ -50,12 +50,6 @@ class GameManager extends System {
 		spaceships = null;
 	}
 	
-	public function setState( state:TGameState ):Void {
-		for ( node in gameNodes ) {
-			node.state.state = state;
-		}
-	}
-	
 	public function activateMainMenu():Void {
 		
 		creator.createTitle();
@@ -75,10 +69,6 @@ class GameManager extends System {
 		creator.createSpaceship( config.width / 2, config.height * 0.8 );
 		creator.createScore();
 		setState( TGameState.Playing );
-	}
-	
-	public function deactivatePlaying():Void {
-		
 	}
 	
 	public function activateGameOver():Void {
@@ -103,7 +93,7 @@ class GameManager extends System {
 		
 		for ( gameNode in gameNodes ) {
 			
-			// in MainMenu or GameOver screen
+			// there are only keyInputNodes in MainMenu or GameOver screen
 			for ( keyInputNode in keyInputs ) {
 				
 				var keyStates = keyInputNode.keyStates;
@@ -124,13 +114,18 @@ class GameManager extends System {
 				}
 			}
 			
-			if ( gameNode.state.state == TGameState.Playing ) {
-				
-				if ( spaceships.empty ) {
-					deactivatePlaying();
+			if ( spaceships.empty ) {
+				if ( gameNode.state.state == TGameState.Playing ) {
 					activateGameOver();
 				}
 			}
 		}
 	}
+	
+	public function setState( state:TGameState ):Void {
+		for ( node in gameNodes ) {
+			node.state.state = state;
+		}
+	}
+	
 }
