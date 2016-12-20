@@ -6,8 +6,10 @@ import kha.audio1.Audio;
 import shmup.EntityCreator;
 import shmup.components.Hitbox;
 import shmup.components.Position;
+import shmup.components.types.Score;
 import shmup.nodes.BulletCollisionNode;
 import shmup.nodes.EnemyCollisionNode;
+import shmup.nodes.ScoreNode;
 
 /**
  * ...
@@ -19,6 +21,7 @@ class CollisionSystem extends System {
 	
 	var bullets:NodeList<BulletCollisionNode>;
 	var enemies:NodeList<EnemyCollisionNode>;
+	var scores:NodeList<ScoreNode>;
 
 	public function new( creator:EntityCreator ) {
 		
@@ -31,12 +34,14 @@ class CollisionSystem extends System {
 		
 		bullets = engine.getNodeList( BulletCollisionNode );
 		enemies = engine.getNodeList( EnemyCollisionNode );
+		scores = engine.getNodeList( ScoreNode );
 	}
 	
 	override public function removeFromEngine( engine:Engine ):Void {
 		
 		bullets = null;
 		enemies = null;
+		scores = null;
 	}
 	
 	override public function update( time:Float ):Void {
@@ -49,6 +54,7 @@ class CollisionSystem extends System {
 					
 					creator.destroyEntity( bulletNode.entity );
 					enemyNode.enemy.esm.changeState( "exploding" );
+					increaseScore();
 					break;
 				}
 			}
@@ -67,5 +73,16 @@ class CollisionSystem extends System {
 				x1 + hitbox1.width >= x2 && 
 				y1 <= y2 + hitbox2.height && 
 				y1 + hitbox1.height >= y2;
-  }
+	}
+	
+	function increaseScore():Void {
+		
+		for ( scoreNode in scores ) {
+			
+			var score = scoreNode.score;
+			
+			score.points++;
+			scoreNode.textContent.text = score.scoreText + Std.string( score.points );
+		}
+	}
 }

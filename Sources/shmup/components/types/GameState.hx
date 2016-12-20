@@ -6,7 +6,7 @@ package shmup.components.types;
  */
 class GameState {
 
-	public var points = 0;
+	public var score = 0;
 	
 	public function new() {	}
 	

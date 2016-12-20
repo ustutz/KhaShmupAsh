@@ -17,11 +17,14 @@ import shmup.components.Motion;
 import shmup.components.PlayState;
 import shmup.components.Position;
 import shmup.components.Size;
+import shmup.components.TextContent;
+import shmup.components.TextFont;
 import shmup.components.types.Bullet;
 import shmup.components.types.Enemy;
 import shmup.components.types.EnemySpawner;
 import shmup.components.types.GameState;
 import shmup.components.types.Gun;
+import shmup.components.types.Score;
 import shmup.components.types.Spaceship;
 
 /**
@@ -67,7 +70,7 @@ class EntityCreator {
 		
 	}
 	
-	public function createGamestate( ):Entity { //trace( "createGamestate" );
+	public function createGamestate():Entity { //trace( "createGamestate" );
 		
 		var gameEntity = new Entity()
 		.add( new GameState() );
@@ -75,6 +78,23 @@ class EntityCreator {
 		engine.addEntity( gameEntity );
 
 		return gameEntity;
+	}
+	
+	public function createScore():Entity {
+		
+		var scoreText = "Score: ";
+		var startPoints = 0;
+		
+		var scoreEntity = new Entity()
+		.add( new Position( 10, 10 ))
+		.add( new TextFont( Assets.fonts.space_age, 20 ))
+		.add( new TextContent( scoreText + Std.string( startPoints )))
+		.add( new Score( scoreText, startPoints ));
+		
+		engine.addEntity( scoreEntity );
+		
+		return scoreEntity;
+		
 	}
 	
 	public function createSpaceship( x:Float, y:Float ):Entity { //trace( "createSpaceship" );

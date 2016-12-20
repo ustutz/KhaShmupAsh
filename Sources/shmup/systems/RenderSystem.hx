@@ -8,6 +8,7 @@ import kha.Scaler;
 import shmup.GameConfig;
 import shmup.components.Position;
 import shmup.nodes.RenderNode;
+import shmup.nodes.TextNode;
 
 
 /**
@@ -16,7 +17,8 @@ import shmup.nodes.RenderNode;
  */
 class RenderSystem extends System {
 
-	var nodes:NodeList<RenderNode>;
+	var renderNodes:NodeList<RenderNode>;
+	var textNodes:NodeList<TextNode>;
 	
 	var config:GameConfig;
 	var backbuffer:Image;
@@ -31,7 +33,14 @@ class RenderSystem extends System {
 	
 	override public function addToEngine( engine:Engine ):Void {
 		
-		nodes = engine.getNodeList( RenderNode );
+		renderNodes = engine.getNodeList( RenderNode );
+		textNodes = engine.getNodeList( TextNode );
+	}
+	
+	override public function removeFromEngine( engine:Engine ):Void {
+		
+		renderNodes = null;
+		textNodes = null;
 	}
 	
 	public function setFramebuffer( framebuffer:Framebuffer ) {
@@ -48,12 +57,23 @@ class RenderSystem extends System {
 		
 		g.begin( config.bgColor );
 		
-		for (node in nodes) {
+		for (node in renderNodes) {
 			
 			var display = node.display;
 			var position = node.position;
 			
 			g.drawImage( display.image, Std.int( position.x ), Std.int( position.y ));
+		}
+		
+		for ( node in textNodes ) {
+			
+			var textFont = node.textFont;
+			var position = node.position;
+			var textContent = node.textContent;
+			
+			g.font = textFont.font;
+			g.fontSize = textFont.fontSize;
+			g.drawString( textContent.text, position.x, position.y );
 		}
 		
 		g.end();

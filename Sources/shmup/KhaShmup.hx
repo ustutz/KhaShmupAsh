@@ -52,6 +52,7 @@ class KhaShmup {
 		
 		creator = new EntityCreator( engine, config, keyStates );
 		creator.createGamestate();
+		creator.createScore();
 		creator.createEnemySpawner( config );
 		
 		// create a buffer to draw to
