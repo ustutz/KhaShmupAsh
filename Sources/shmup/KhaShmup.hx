@@ -33,6 +33,7 @@ class KhaShmup {
 	var creator:EntityCreator;
 	var config:GameConfig;
 	var keyListener:KeyListener;
+	var gameManager:GameManager;
 	
 	var tickProvider:KhaFrameTickProvider;
 	
@@ -52,15 +53,16 @@ class KhaShmup {
 		
 		creator = new EntityCreator( engine, config, keyStates );
 		creator.createGamestate();
-		creator.createScore();
 		creator.createEnemySpawner( config );
 		
 		// create a buffer to draw to
 		var backbuffer = Image.createRenderTarget( screenWidth, screenHeight );
 		var renderSystem = new RenderSystem( config, backbuffer );
 		
-		engine.addSystem( new GameManager( creator, config ), SystemPriorities.preUpdate );
-		engine.addSystem( new EnemySpawnerSystem( creator, config ), SystemPriorities.update );
+		gameManager = new GameManager( engine, creator, config );
+		
+		engine.addSystem( gameManager, SystemPriorities.preUpdate );
+		//engine.addSystem( new EnemySpawnerSystem( creator, config ), SystemPriorities.update );
 		engine.addSystem( new MotionControlSystem( config ), SystemPriorities.update );
 		engine.addSystem( new GunControlSystem( creator ), SystemPriorities.update );
 		engine.addSystem( new MovementSystem( config ), SystemPriorities.update );
@@ -81,6 +83,8 @@ class KhaShmup {
 		tickProvider = new KhaFrameTickProvider( 60 );
 		tickProvider.add( engine.update );
 		tickProvider.start();
+		
+		gameManager.activateMainMenu();
 	}
 
 }

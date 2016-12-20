@@ -1,4 +1,5 @@
 package shmup.components.types;
+import shmup.components.TGameState;
 
 /**
  * ...
@@ -6,8 +7,12 @@ package shmup.components.types;
  */
 class GameState {
 
-	public var score = 0;
+	public var score:Int;
+	public var state:TGameState;
 	
-	public function new() {	}
+	public function new( state:TGameState, score:Int = 0 ) {
+		this.state = state;
+		this.score = score;
+	}
 	
 }

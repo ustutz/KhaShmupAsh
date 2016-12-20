@@ -2,11 +2,14 @@ package shmup.systems;
 import ash.core.Engine;
 import ash.core.NodeList;
 import ash.core.System;
+import kha.FastFloat;
 import kha.Framebuffer;
 import kha.Image;
 import kha.Scaler;
+import kha.graphics2.Graphics;
 import shmup.GameConfig;
 import shmup.components.Position;
+import shmup.components.TAlign;
 import shmup.nodes.RenderNode;
 import shmup.nodes.TextNode;
 
@@ -66,14 +69,7 @@ class RenderSystem extends System {
 		}
 		
 		for ( node in textNodes ) {
-			
-			var textFont = node.textFont;
-			var position = node.position;
-			var textContent = node.textContent;
-			
-			g.font = textFont.font;
-			g.fontSize = textFont.fontSize;
-			g.drawString( textContent.text, position.x, position.y );
+			renderText( node, g );
 		}
 		
 		g.end();
@@ -82,5 +78,27 @@ class RenderSystem extends System {
 		Scaler.scale( backbuffer, framebuffer, kha.System.screenRotation );
 		framebuffer.g2.end();
 	}
-	
+		
+	inline function renderText( node:TextNode, g:Graphics ):Void {
+		
+		var textFont = node.textFont;
+		var position = node.position;
+		var textContent = node.textContent;
+		
+		g.font = textFont.font;
+		g.fontSize = textFont.fontSize;
+		
+		var x:FastFloat;
+		
+		switch textContent.align {
+			case TAlign.Left:
+				x = position.x;
+			case TAlign.Center:
+				x = config.width / 2 + position.x - g.font.width( textFont.fontSize, textContent.text ) / 2;
+			case TAlign.Right:
+				x = config.width - position.x - g.font.width( textFont.fontSize, textContent.text );
+		}
+		
+		g.drawString( textContent.text, x, position.y );
+	}
 }

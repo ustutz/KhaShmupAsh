@@ -3,7 +3,7 @@ import ash.tools.ListIteratingSystem;
 import shmup.EntityCreator;
 import shmup.components.Animation;
 import shmup.components.Display;
-import shmup.components.PlayState;
+import shmup.components.TPlayState;
 import shmup.nodes.AnimationNode;
 
 /**
@@ -38,7 +38,7 @@ class AnimationSystem extends ListIteratingSystem<AnimationNode> {
 				return;
 			}
 			
-			if ( animation.playState == PlayState.Loop ) {
+			if ( animation.playState == TPlayState.Loop ) {
 				
 				animation.index = 0;
 				updateAnimationFrame( animation, display );

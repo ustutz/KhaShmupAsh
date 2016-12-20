@@ -14,7 +14,9 @@ import shmup.components.Hitbox;
 import shmup.components.KeyStates;
 import shmup.components.Controls;
 import shmup.components.Motion;
-import shmup.components.PlayState;
+import shmup.components.TAlign;
+import shmup.components.TGameState;
+import shmup.components.TPlayState;
 import shmup.components.Position;
 import shmup.components.Size;
 import shmup.components.TextContent;
@@ -24,6 +26,7 @@ import shmup.components.types.Enemy;
 import shmup.components.types.EnemySpawner;
 import shmup.components.types.GameState;
 import shmup.components.types.Gun;
+import shmup.components.types.KeyInput;
 import shmup.components.types.Score;
 import shmup.components.types.Spaceship;
 
@@ -73,11 +76,40 @@ class EntityCreator {
 	public function createGamestate():Entity { //trace( "createGamestate" );
 		
 		var gameEntity = new Entity()
-		.add( new GameState() );
+		.add( new GameState( TGameState.MainMenu ));
 		
 		engine.addEntity( gameEntity );
 
 		return gameEntity;
+	}
+	
+	public function createTitle():Void {
+		
+		var titleEntity = new Entity()
+		.add( new Position( 0, 60 ))
+		.add( new TextFont( Assets.fonts.space_age, 60 ))
+		.add( new TextContent( "KhaShmup Ash", TAlign.Center ));
+		
+		engine.addEntity( titleEntity );
+		
+		
+		var keysEntity = new Entity()
+		.add( new Position( 0, config.height - 130 ))
+		.add( new TextFont( Assets.fonts.space_age, 26 ))
+		.add( new TextContent( "Arrow Keys to move, Z key to shoot.", TAlign.Center ));
+		
+		engine.addEntity( keysEntity );
+		
+		
+		var startEntity = new Entity()
+		.add( new Position( 0, config.height - 100 ))
+		.add( new TextFont( Assets.fonts.space_age, 26 ))
+		.add( keyStates )
+		.add( new KeyInput() )
+		.add( new TextContent( "Press Z to start.", TAlign.Center ));
+		
+		engine.addEntity( startEntity );
+		
 	}
 	
 	public function createScore():Entity {

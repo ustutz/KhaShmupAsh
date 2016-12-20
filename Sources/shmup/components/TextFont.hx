@@ -1,5 +1,4 @@
 package shmup.components;
-import kha.FastFloat;
 import kha.Font;
 
 /**
@@ -12,7 +11,6 @@ class TextFont {
 	public var fontSize:Int;
 
 	public function new( font:Font, fontSize:Int ) {
-		
 		this.font = font;
 		this.fontSize = fontSize;
 	}

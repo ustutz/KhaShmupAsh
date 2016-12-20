@@ -12,7 +12,7 @@ class Animation {
 	
 	public var currentTime:Float;
 	public var index:Int;
-	public var playState:PlayState;
+	public var playState:TPlayState;
 
 	public function new( frameDuration:Float = 1, frames:Array<Image> = null ) {
 		
@@ -21,7 +21,7 @@ class Animation {
 		
 		currentTime = 0;
 		index = 0;
-		playState = PlayState.Once;
+		playState = TPlayState.Once;
 	}
 	
 }
