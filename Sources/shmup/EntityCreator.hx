@@ -112,6 +112,26 @@ class EntityCreator {
 		
 	}
 	
+	public function createGameOver():Void {
+		
+		var gameOverEntity = new Entity()
+		.add( new Position( 0, 60 ))
+		.add( new TextFont( Assets.fonts.space_age, 60 ))
+		.add( new TextContent( "Game Over", TAlign.Center ));
+		
+		engine.addEntity( gameOverEntity );
+		
+		var startEntity = new Entity()
+		.add( new Position( 0, config.height - 100 ))
+		.add( new TextFont( Assets.fonts.space_age, 26 ))
+		.add( keyStates )
+		.add( new KeyInput() )
+		.add( new TextContent( "Press Z to restart.", TAlign.Center ));
+		
+		engine.addEntity( startEntity );
+		
+	}
+	
 	public function createScore():Entity {
 		
 		var scoreText = "Score: ";
@@ -140,6 +160,7 @@ class EntityCreator {
 		var spaceshipEntity = new Entity()
 		.add( new Position( startX, startY ))
 		.add( new Size( playerShip.width, playerShip.height ))
+		.add( new Hitbox( 0, 0, playerShip.width, playerShip.height ))
 		.add( new Controls( 200.0, 200.0 ))
 		.add( keyStates )
 		.add( new Gun( gunSound, 0.3 ))
@@ -258,4 +279,5 @@ class EntityCreator {
 		return enemyEntity;
 		
 	}
+	
 }

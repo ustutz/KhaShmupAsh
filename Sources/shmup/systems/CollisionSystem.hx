@@ -9,6 +9,7 @@ import shmup.components.Position;
 import shmup.components.types.Score;
 import shmup.nodes.BulletCollisionNode;
 import shmup.nodes.EnemyCollisionNode;
+import shmup.nodes.PlayerCollisionNode;
 import shmup.nodes.ScoreNode;
 
 /**
@@ -19,6 +20,7 @@ class CollisionSystem extends System {
 	
 	var creator:EntityCreator;
 	
+	var players:NodeList<PlayerCollisionNode>;
 	var bullets:NodeList<BulletCollisionNode>;
 	var enemies:NodeList<EnemyCollisionNode>;
 	var scores:NodeList<ScoreNode>;
@@ -32,6 +34,7 @@ class CollisionSystem extends System {
 	
 	override public function addToEngine( engine:Engine ):Void {
 		
+		players = engine.getNodeList( PlayerCollisionNode );
 		bullets = engine.getNodeList( BulletCollisionNode );
 		enemies = engine.getNodeList( EnemyCollisionNode );
 		scores = engine.getNodeList( ScoreNode );
@@ -39,6 +42,7 @@ class CollisionSystem extends System {
 	
 	override public function removeFromEngine( engine:Engine ):Void {
 		
+		players = null;
 		bullets = null;
 		enemies = null;
 		scores = null;
@@ -50,12 +54,23 @@ class CollisionSystem extends System {
 			for ( enemyNode in enemies ) {
 				if ( overlaps( bulletNode.position, bulletNode.hitbox, enemyNode.position, enemyNode.hitbox )) {
 					
-					Audio.play( enemyNode.explosionSound.sound, false );
+					Audio.play( enemyNode.explosionSound.sound );
 					
 					creator.destroyEntity( bulletNode.entity );
 					enemyNode.enemy.esm.changeState( "exploding" );
 					increaseScore();
 					break;
+				}
+			}
+		}
+		
+		for ( playerNode in players ) {
+			for ( enemyNode in enemies ) {
+				if ( overlaps( playerNode.position, playerNode.hitbox, enemyNode.position, enemyNode.hitbox )) {
+					
+					Audio.play( enemyNode.explosionSound.sound );
+					enemyNode.enemy.esm.changeState( "exploding" );
+					creator.destroyEntity( playerNode.entity );
 				}
 			}
 		}

@@ -5,6 +5,7 @@ import ash.core.System;
 import shmup.components.TGameState;
 import shmup.nodes.GameNode;
 import shmup.nodes.KeyInputNode;
+import shmup.nodes.ScoreNode;
 import shmup.nodes.SpaceshipNode;
 import shmup.nodes.TextNode;
 
@@ -22,6 +23,7 @@ class GameManager extends System {
 	var spaceships:NodeList<SpaceshipNode>;
 	var textNodes:NodeList<TextNode>;
 	var keyInputs:NodeList<KeyInputNode>;
+	var scores:NodeList<ScoreNode>;
 	
 	public function new( engine:Engine, creator:EntityCreator, config:GameConfig ) {
 		
@@ -36,6 +38,7 @@ class GameManager extends System {
 		gameNodes = engine.getNodeList( GameNode );
 		keyInputs = engine.getNodeList( KeyInputNode );
 		textNodes = engine.getNodeList( TextNode );
+		scores = engine.getNodeList( ScoreNode );
 		spaceships = engine.getNodeList( SpaceshipNode );
 	}
 	
@@ -47,9 +50,16 @@ class GameManager extends System {
 		spaceships = null;
 	}
 	
+	public function setState( state:TGameState ):Void {
+		for ( node in gameNodes ) {
+			node.state.state = state;
+		}
+	}
+	
 	public function activateMainMenu():Void {
 		
 		creator.createTitle();
+		setState( TGameState.MainMenu );
 	}
 	
 	public function deactivateMainMenu():Void {
@@ -62,8 +72,9 @@ class GameManager extends System {
 	
 	public function activatePlaying():Void {
 		
-		creator.createScore();
 		creator.createSpaceship( config.width / 2, config.height * 0.8 );
+		creator.createScore();
+		setState( TGameState.Playing );
 	}
 	
 	public function deactivatePlaying():Void {
@@ -72,10 +83,20 @@ class GameManager extends System {
 	
 	public function activateGameOver():Void {
 		
+		creator.createGameOver();
+		setState( TGameState.Over );
+
 	}
 	
 	public function deactivateGameOver():Void {
 		
+		for ( node in textNodes ) {
+			creator.destroyEntity( node.entity );
+		}
+		
+		for ( scoreNode in scores ) {
+			scoreNode.score.points = 0;
+		}
 	}
 	
 	override public function update(time:Float):Void {
